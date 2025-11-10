@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-11-09T16:31:59.641064",
+  "channel": "ARENA ALFA",
+  "daysback": 3,
+  "videos": [
+    {
+      "videoId": "5RDT2mbdJM0",
+      "title": "¿Burbuja IA? El mercado más sobrevalorado de la historia",
+      "publishTime": "2025-11-07T00:51:33Z",
+      "videoUrl": "https://www.youtube.com/watch?v=5RDT2mbdJM0",
+      "kind": "youtube#video",
+      "channelId": "UCOIk09EE_Xfp7PB5LQPXhtg",
+      "channelTitle": "ARENA ALFA ",
+      "duration": 26.0
+    }
+  ]
+}

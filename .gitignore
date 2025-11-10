@@ -1,0 +1,57 @@
+*.csv
+*.pkl
+*.ubj
+.DS_Store
+features_resnet50/
+frames/
+videos_youtube/
+keyframes/
+
+# Python-specific ignores
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.manifest
+*.spec
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+.ENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs and debug files
+*.log
+*.out
+*.err
+
+# IDE-specific ignores
+.vscode/
+.idea/
+*.swp
+
+# Environment variables
+.env
+
+# Byte-compiled and optimized files
+*.pyc
+*.pyo
+*.pyd
+
+# Test coverage reports
+htmlcov/
+.coverage
+.tox/
+.nox/
+.cache/
+pytest_cache/

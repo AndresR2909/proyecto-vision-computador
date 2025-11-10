@@ -1,0 +1,10 @@
+{
+  "frames_filtered": {
+    "filter_stats": {
+      "original_count": 642,
+      "filtered_count": 339,
+      "reduction_percentage": 47.19626168224299,
+      "frames_removed": 303
+    }
+  }
+}

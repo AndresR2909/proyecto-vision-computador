@@ -1,0 +1,123 @@
+RESUMEN DE ARTÍCULOS PDF
+================================================================================
+
+
+CLUSTERING
+--------------------------------------------------------------------------------
+Texto completo guardado en: /Users/andrestrepo/Documents/repos_personal/proyecto-vision-computador/clustering_extracted_text.txt
+
+Métodos encontrados:
+
+clustering:
+  - k-means
+    Contexto: os frame by frame. Using a dual convolutional neural network
+(CNN), we extract deep-level features. K-means clustering is then applied
+to group the fe...
+  - spectral
+    Contexto: sual cues. Additionally, clustering-based approaches, such
+as k-means clustering, partitioning, and spectral clustering, have been utilized.
+70 S. Kas...
+  - clustering
+    Contexto: Static Video Summarization Using
+Transfer Learning and Clustering
+Shamal Kashid 1(B),L a l i tK .A w a s t h i1, Krishan Berwal2, and Parul Saini1
+1 C...
+
+kek:
+  - k-means
+    Contexto: os frame by frame. Using a dual convolutional neural network
+(CNN), we extract deep-level features. K-means clustering is then applied
+to group the fe...
+  - silhouette
+    Contexto: e video, the algorithm selects representa-
+tive frames from each cluster to identify keyframes. The silhouette score (SS)
+determines the optimal numbe...
+
+optimization:
+  - optimal
+    Contexto: enta-
+tive frames from each cluster to identify keyframes. The silhouette score (SS)
+determines the optimal number of clusters, which signiﬁcantly inﬂ...
+  - silhouette
+    Contexto: e video, the algorithm selects representa-
+tive frames from each cluster to identify keyframes. The silhouette score (SS)
+determines the optimal numbe...
+
+features:
+  - features
+    Contexto: yzing videos frame by frame. Using a dual convolutional neural network
+(CNN), we extract deep-level features. K-means clustering is then applied
+to gr...
+  - temporal
+    Contexto: k datasets to demonstrate the model’s eﬀectiveness. Previous techniques
+often focused on spatial or temporal characteristics, ignoring a comprehensive...
+  - resnet
+    Contexto: ures extraction using the transfer learning tech-
+nique of Dual-CNNs with the help of GoogleNet and ResNet-50.
+3. We present a method to summarize soc...
+
+metrics:
+  - metric
+    Contexto: hrough eﬃcient feature extraction and
+clustering methods. The approach also incorporates evaluation metrics on bench-
+mark datasets to demonstrate the...
+  - distance
+    Contexto: thm par-
+titions video frames into clusters based on their visual similarities, utilizing
+euclidean distance as the measure of similarity. Each cluste...
+  - euclidean
+    Contexto: The algorithm par-
+titions video frames into clusters based on their visual similarities, utilizing
+euclidean distance as the measure of similarity. E...
+
+KEK
+--------------------------------------------------------------------------------
+Texto completo guardado en: /Users/andrestrepo/Documents/repos_personal/proyecto-vision-computador/kek_extracted_text.txt
+
+Métodos encontrados:
+
+clustering:
+  - hierarchical
+    Contexto: echnique using LSTM and adversarial LSTM, and produced a summary.
+And Zhao et al. [ 19] introduced hierarchical RNN-based techniques, to overcome
+th...
+  - clustering
+    Contexto: aditional-based.
+2.1 Key-Frame Selection Using Traditional Approaches
+Lai and Yi [ 11] proposed a clustering algorithm in which frames that are simi...
+  - cluster
+    Contexto: niques like CNN and LSTM-based, as well as
+conventional techniques like color-based, motion-based, cluster-based, and so on.
+Color is regarded as a ...
+
+kek:
+  - keyframe extraction
+    Contexto: ps://doi.org/10.5772/intech
+open.91188
+15. Savran K ızıltepe R, Gan JQ, Escobar JJ (2021) A novel keyframe extraction method for video
+classiﬁcatio...
+
+features:
+  - features
+    Contexto: videos move erratically, motion-based algorithms are unable to identify
+redundancy in frames. Deep features from the video have to be extracted in or...
+  - histogram
+    Contexto: extensive use of it. Muhammad et al. in [ 3] proposed a color-
+based key-frame extraction method. A histogram with gradient, color, saturation,
+and c...
+  - temporal
+    Contexto: to still images. Huand and Wang [ 13] introduced the concept of shot segmentation
+based on spatial–temporal information. Key-frames are selected from...
+
+metrics:
+  - metric
+    Contexto: ss effective and performs poorly. The goal of this
+research study was to use the cosine similarity metric to obtain key-frame-based video
+summarizat...
+  - distance
+    Contexto: value decomposition is
+utilized to rank the frames, and key-frames are picked using an inter-frame distance
+metric, resulting in minimal redundancy ...
+  - cosine
+    Contexto: ent ways. It is less effective and performs poorly. The goal of this
+research study was to use the cosine similarity metric to obtain key-frame-based...

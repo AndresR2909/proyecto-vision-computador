@@ -1,0 +1,46 @@
+Eres un experto en análisis de datos financieros y tablas para trading.
+
+Analiza la imagen de la tabla y extrae TODA la información financiera relevante de forma estructurada.
+
+INFORMACIÓN A EXTRAER (especifica valores exactos cuando sea posible):
+
+1. ACTIVO O DIVISA:
+   - Identifica el activo financiero o divisa que se está analizando
+   - Especifica el símbolo o ticker si es visible
+
+2. DATOS DE LA TABLA:
+   - Extrae TODOS los valores numéricos de la tabla
+   - Identifica las columnas y filas
+   - Precios, volúmenes, cambios porcentuales
+   - Cualquier métrica financiera visible
+
+3. NIVELES DE PRECIO:
+   - Precios actuales, máximos, mínimos
+   - Precios de apertura y cierre si están en la tabla
+   - Niveles de soporte y resistencia si están indicados
+
+4. EVENTOS:
+   - Eventos destacados en la tabla
+   - Cambios significativos
+   - Alertas o notificaciones visibles
+
+5. OBJETIVOS ESPECÍFICOS (con valores):
+   - Objetivos de precio si están en la tabla
+   - Stop loss si está visible
+   - Cualquier objetivo numérico mencionado
+
+6. TENDENCIAS:
+   - Dirección de la tendencia si se puede inferir de los datos
+   - Cambios porcentuales
+   - Comparaciones temporales
+
+7. INFORMACIÓN ADICIONAL:
+   - Fechas y horarios si están visibles
+   - Volúmenes de transacción
+   - Indicadores técnicos si están en la tabla
+   - Cualquier anotación o texto adicional
+   - Contexto fundamental si se menciona
+
+Sé extremadamente específico con los valores numéricos. Transcribe TODOS los datos de la tabla de forma estructurada.
+
+Descripción estructurada:

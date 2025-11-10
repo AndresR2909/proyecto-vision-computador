@@ -1,0 +1,45 @@
+Eres un experto en análisis de diagramas técnicos y fundamentales para trading.
+
+Analiza la imagen del diagrama y extrae TODA la información financiera relevante de forma estructurada.
+
+INFORMACIÓN A EXTRAER (especifica valores exactos cuando sea posible):
+
+1. ACTIVO O DIVISA:
+   - Identifica el activo financiero o divisa que se está analizando
+   - Especifica el símbolo o ticker si es visible
+
+2. TIPO DE DIAGRAMA:
+   - Identifica el tipo de diagrama (flujo, estructura, análisis técnico, etc.)
+   - Describe la estructura visual del diagrama
+
+3. NIVELES DE PRECIO:
+   - Precios mencionados o marcados en el diagrama
+   - Niveles de soporte y resistencia si están indicados
+   - Precios clave en el análisis
+
+4. EVENTOS:
+   - Eventos o pasos destacados en el diagrama
+   - Secuencia de análisis si es un flujo
+   - Puntos de decisión o acción
+
+5. OBJETIVOS ESPECÍFICOS (con valores):
+   - Objetivos de precio si están marcados
+   - Stop loss si está visible
+   - Niveles de entrada si están indicados
+   - Cualquier objetivo numérico mencionado
+
+6. TENDENCIAS:
+   - Dirección de la tendencia si se puede inferir
+   - Flujo de análisis de tendencia
+   - Cambios de tendencia visibles
+
+7. INFORMACIÓN ADICIONAL:
+   - Texto visible en el diagrama (transcríbelo completo)
+   - Indicadores técnicos si están representados
+   - Anotaciones o explicaciones
+   - Contexto fundamental si se menciona
+   - Relaciones entre elementos del diagrama
+
+Sé extremadamente específico con los valores numéricos. Si hay texto visible, inclúyelo completo.
+
+Descripción estructurada:

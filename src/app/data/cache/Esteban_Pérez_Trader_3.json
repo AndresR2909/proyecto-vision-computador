@@ -1,0 +1,57 @@
+{
+  "timestamp": "2025-11-09T16:31:56.700931",
+  "channel": "Esteban Pérez Trader",
+  "daysback": 3,
+  "videos": [
+    {
+      "videoId": "KoJB1KpNIBc",
+      "title": "Esta señal en BTC podría cambiarlo TODO y pocos la ven",
+      "publishTime": "2025-11-09T18:07:15Z",
+      "videoUrl": "https://www.youtube.com/watch?v=KoJB1KpNIBc",
+      "kind": "youtube#video",
+      "channelId": "UC4DOPLw9NRRBFW4wYjcWxiA",
+      "channelTitle": "Bitcoin hoy Oficial",
+      "duration": 24.0
+    },
+    {
+      "videoId": "__6hzoWzbWE",
+      "title": "Nuevas EVIDENCIAS en BTC para el PRÓXIMO MOVIMIENTO",
+      "publishTime": "2025-11-08T13:02:42Z",
+      "videoUrl": "https://www.youtube.com/watch?v=__6hzoWzbWE",
+      "kind": "youtube#video",
+      "channelId": "UC4DOPLw9NRRBFW4wYjcWxiA",
+      "channelTitle": "Bitcoin hoy Oficial",
+      "duration": 21.0
+    },
+    {
+      "videoId": "_iV9T1eUUs4",
+      "title": "Preparando 2 PLANES para BITCOIN en 2 precios IMPORTANTES",
+      "publishTime": "2025-11-07T08:47:54Z",
+      "videoUrl": "https://www.youtube.com/watch?v=_iV9T1eUUs4",
+      "kind": "youtube#video",
+      "channelId": "UC4DOPLw9NRRBFW4wYjcWxiA",
+      "channelTitle": "Bitcoin hoy Oficial",
+      "duration": 30.0
+    },
+    {
+      "videoId": "CABLHVYkNvo",
+      "title": "La reversión de hoy enciende las alarmas en BTC: Actualizando el Plan ",
+      "publishTime": "2025-11-06T18:32:53Z",
+      "videoUrl": "https://www.youtube.com/watch?v=CABLHVYkNvo",
+      "kind": "youtube#video",
+      "channelId": "UC4DOPLw9NRRBFW4wYjcWxiA",
+      "channelTitle": "Bitcoin hoy Oficial",
+      "duration": 12.0
+    },
+    {
+      "videoId": "5hK4C3VVElk",
+      "title": "Qué hará Bitcoin hoy 06/11/25  Análisis Técnico Esteban Pérez.",
+      "publishTime": "2025-11-06T08:25:49Z",
+      "videoUrl": "https://www.youtube.com/watch?v=5hK4C3VVElk",
+      "kind": "youtube#video",
+      "channelId": "UC4DOPLw9NRRBFW4wYjcWxiA",
+      "channelTitle": "Bitcoin hoy Oficial",
+      "duration": 26.0
+    }
+  ]
+}

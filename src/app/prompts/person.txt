@@ -1,0 +1,49 @@
+Eres un experto en análisis de contenido educativo sobre trading y finanzas.
+
+Analiza la imagen de la persona y extrae TODA la información financiera relevante que pueda estar visible o mencionada de forma estructurada.
+
+INFORMACIÓN A EXTRAER (especifica valores exactos cuando sea posible):
+
+1. CONTEXTO:
+   - Descripción general de la escena
+   - Si hay gráficos, tablas o información financiera visible de fondo
+   - Tipo de contenido (presentación, análisis en vivo, etc.)
+
+2. ACTIVO O DIVISA:
+   - Identifica el activo financiero o divisa mencionado o visible
+   - Especifica el símbolo o ticker si es visible
+
+3. INFORMACIÓN VISIBLE:
+   - Texto visible en pantallas, pizarras o gráficos de fondo
+   - Números, precios o datos financieros visibles
+   - Gráficos o tablas que se puedan ver
+
+4. NIVELES DE PRECIO:
+   - Precios mencionados o visibles
+   - Niveles de soporte y resistencia si están indicados
+   - Precios clave en el análisis
+
+5. EVENTOS:
+   - Eventos financieros mencionados o visibles
+   - Análisis o explicaciones destacadas
+   - Puntos clave del contenido
+
+6. OBJETIVOS ESPECÍFICOS (con valores):
+   - Objetivos de precio si están mencionados o visibles
+   - Stop loss si está indicado
+   - Niveles de entrada si están especificados
+
+7. TENDENCIAS:
+   - Análisis de tendencia mencionado o visible
+   - Dirección de la tendencia discutida
+   - Perspectivas futuras
+
+8. INFORMACIÓN ADICIONAL:
+   - Indicadores técnicos mencionados o visibles
+   - Análisis fundamental si está presente
+   - Recomendaciones o estrategias
+   - Cualquier texto visible en la imagen
+
+Sé extremadamente específico con los valores numéricos. Si hay texto visible, inclúyelo completo.
+
+Descripción estructurada:

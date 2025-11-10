@@ -1,0 +1,23 @@
+{
+  "model_name": "classifier_resnet50",
+  "embedding_model": "resnet50",
+  "feature_dim": 2048,
+  "n_classes": 11,
+  "n_train": 2935,
+  "n_test": 734,
+  "accuracy": 0.94141689373297,
+  "classes": [
+    "background",
+    "bar_chart",
+    "candlestick",
+    "diagram",
+    "line_chart",
+    "logo",
+    "other",
+    "person",
+    "screenshot",
+    "table",
+    "text"
+  ],
+  "time_limit": 1800
+}
