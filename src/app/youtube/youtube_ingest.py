@@ -19,7 +19,6 @@ load_dotenv()
 
 API_KEY = os.getenv('API_KEY_YOUTUBE')
 CHANNELS = [
-    'Esteban Pérez Trader',
     'Bolsas hoy | Invierte y Crece',
     'ARENA ALFA',
     'Bitcoin hoy Oficial',

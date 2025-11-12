@@ -35,6 +35,16 @@ class KeyFrameSelector:
         clustering_method: str = 'kmeans',
         distance_metric: str = 'euclidean',
         normalize_features: bool = False,
+        # Parámetros de K-Means
+        n_init: int = 10,
+        max_iter: int = 300,
+        # Parámetros de optimización
+        elbow_method_threshold: float = 0.05,
+        optimization_method: str = 'both',  # 'elbow', 'silhouette', 'both'
+        # Parámetros de selección de keyframes
+        keyframe_selection_method: str = 'closest_to_centroid',  # 'closest_to_centroid', 'furthest_from_centroid'
+        temporal_weight: float = 0.0,
+        min_frames_per_cluster: int = 1,
     ):
         """
         Inicializa el selector de key frames.
@@ -53,6 +63,13 @@ class KeyFrameSelector:
             clustering_method: Método de clustering ('kmeans', 'dbscan', 'agglomerative')
             distance_metric: Métrica de distancia ('euclidean', 'cosine')
             normalize_features: Si True, normaliza features L2 antes de clustering (útil para cosine)
+            n_init: Número de inicializaciones para K-Means
+            max_iter: Número máximo de iteraciones para K-Means
+            elbow_method_threshold: Umbral para método del codo (0.01-0.1)
+            optimization_method: Método de optimización ('elbow', 'silhouette', 'both')
+            keyframe_selection_method: Método de selección ('closest_to_centroid', 'furthest_from_centroid')
+            temporal_weight: Peso temporal para selección (0.0-1.0)
+            min_frames_per_cluster: Mínimo de frames por cluster para generar keyframe
         """
         self.n_clusters = n_clusters
         self.random_state = random_state
@@ -64,6 +81,16 @@ class KeyFrameSelector:
         self.clustering_method = clustering_method
         self.distance_metric = distance_metric
         self.normalize_features = normalize_features
+        # Parámetros de K-Means
+        self.n_init = n_init
+        self.max_iter = max_iter
+        # Parámetros de optimización
+        self.elbow_method_threshold = elbow_method_threshold
+        self.optimization_method = optimization_method
+        # Parámetros de selección de keyframes
+        self.keyframe_selection_method = keyframe_selection_method
+        self.temporal_weight = temporal_weight
+        self.min_frames_per_cluster = min_frames_per_cluster
 
     def find_optimal_clusters(
         self,
@@ -163,7 +190,12 @@ class KeyFrameSelector:
                             distances = 1 - similarities.flatten()
                             inertia += distances.sum()
                 else:
-                    kmeans = KMeans(n_clusters=k, random_state=self.random_state, n_init=10)
+                    kmeans = KMeans(
+                        n_clusters=k,
+                        random_state=self.random_state,
+                        n_init=self.n_init,
+                        max_iter=self.max_iter,
+                    )
                     labels = kmeans.fit_predict(features_to_use)
                     inertia = kmeans.inertia_
             else:
@@ -184,14 +216,22 @@ class KeyFrameSelector:
             else:
                 silhouettes.append(0)
 
-        # Método del codo mejorado: detectar el punto de máxima curvatura
-        optimal_k = self._find_elbow_point(inertias, k_range, min_clusters)
-
-        # Si silhouette sugiere un k más bajo, considerar ese también
-        if len(silhouettes) > 0 and max(silhouettes) > 0:
-            silhouette_optimal = list(k_range)[np.argmax(silhouettes)]
-            # Preferir el menor entre codo y silhouette (más conservador)
-            optimal_k = min(optimal_k, silhouette_optimal)
+        # Determinar k óptimo según método de optimización
+        if self.optimization_method == 'elbow':
+            optimal_k = self._find_elbow_point(inertias, k_range, min_clusters)
+        elif self.optimization_method == 'silhouette':
+            if len(silhouettes) > 0 and max(silhouettes) > 0:
+                optimal_k = list(k_range)[np.argmax(silhouettes)]
+            else:
+                optimal_k = self._find_elbow_point(inertias, k_range, min_clusters)
+        else:  # 'both'
+            # Método del codo mejorado: detectar el punto de máxima curvatura
+            optimal_k = self._find_elbow_point(inertias, k_range, min_clusters)
+            # Si silhouette sugiere un k más bajo, considerar ese también
+            if len(silhouettes) > 0 and max(silhouettes) > 0:
+                silhouette_optimal = list(k_range)[np.argmax(silhouettes)]
+                # Preferir el menor entre codo y silhouette (más conservador)
+                optimal_k = min(optimal_k, silhouette_optimal)
 
         # Asegurar que no exceda el máximo permitido por ratio
         if n_frames is not None:
@@ -256,8 +296,8 @@ class KeyFrameSelector:
                 if len(inertias) > 1:
                     reduction_rates = np.abs(first_derivative) / (inertias[:-1] + 1e-10)  # Evitar división por cero
 
-                    # Encontrar el punto donde la reducción se vuelve pequeña (menos del 5% del valor anterior)
-                    threshold = 0.05  # 5% de reducción
+                    # Encontrar el punto donde la reducción se vuelve pequeña
+                    threshold = self.elbow_method_threshold
                     stable_points = np.where(reduction_rates < threshold)[0]
 
                     if len(stable_points) > 0:
@@ -301,7 +341,12 @@ class KeyFrameSelector:
                         inertia += distances.sum()
                 return labels, inertia
             else:
-                kmeans = KMeans(n_clusters=n_clusters, random_state=self.random_state, n_init=10)
+                kmeans = KMeans(
+                    n_clusters=n_clusters,
+                    random_state=self.random_state,
+                    n_init=self.n_init,
+                    max_iter=self.max_iter,
+                )
                 labels = kmeans.fit_predict(features)
                 return labels, kmeans.inertia_
         elif self.clustering_method == 'agglomerative':
@@ -429,7 +474,8 @@ class KeyFrameSelector:
                 kmeans = KMeans(
                     n_clusters=n_clusters,
                     random_state=self.random_state,
-                    n_init=10,
+                    n_init=self.n_init,
+                    max_iter=self.max_iter,
                 )
                 labels = kmeans.fit_predict(features_to_use)
                 model = kmeans
@@ -514,6 +560,10 @@ class KeyFrameSelector:
             if len(cluster_indices) == 0:
                 continue
 
+            # Filtrar por mínimo de frames por cluster
+            if len(cluster_indices) < self.min_frames_per_cluster:
+                continue
+
             # Obtener features del cluster
             cluster_features = features[cluster_indices]
 
@@ -530,10 +580,27 @@ class KeyFrameSelector:
             else:
                 distances = cdist(cluster_features, centroid.reshape(1, -1), metric='euclidean').flatten()
 
-            # Encontrar el frame más cercano al centroide
-            closest_idx = np.argmin(distances)
-            frame_idx = cluster_indices[closest_idx]
+            # Aplicar peso temporal si está configurado
+            if self.temporal_weight > 0.0:
+                # Calcular distancias temporales (posición en el video)
+                temporal_distances = np.abs(cluster_indices - cluster_indices.mean())
+                temporal_distances_norm = temporal_distances / (temporal_distances.max() + 1e-10)
+                # Combinar distancia espacial y temporal
+                combined_distances = (
+                    (1 - self.temporal_weight) * distances +
+                    self.temporal_weight * temporal_distances_norm
+                )
+                distances = combined_distances
 
+            # Seleccionar frame según método configurado
+            if self.keyframe_selection_method == 'furthest_from_centroid':
+                # Frame más lejano al centroide (según artículo)
+                selected_idx = np.argmax(distances)
+            else:  # 'closest_to_centroid' (default)
+                # Frame más cercano al centroide
+                selected_idx = np.argmin(distances)
+
+            frame_idx = cluster_indices[selected_idx]
             keyframes.append(frame_paths[frame_idx])
 
         return keyframes

@@ -118,10 +118,11 @@ modo = st.sidebar.radio(
 # Sección 1: Cargar videos de últimos 3 días
 ###################################################
 if modo == '1️⃣ Cargar Videos':
-    st.title('1️⃣ Cargar Videos de Últimos 3 Días')
+    daysback = 7
+    st.title(f'1️⃣ Cargar Videos de Últimos {daysback} Días')
 
     youtube_ingest = components['youtube_ingest']
-    daysback = 3
+
 
     st.subheader(
         f"Videos disponibles por canal (últimos {daysback} días)",
@@ -662,6 +663,79 @@ elif modo == '4️⃣ Selección de Keyframes':
         ),
     )
 
+    # Configuración avanzada de K-Means (solo para método kmeans)
+    if method == 'kmeans':
+        st.markdown('### ⚙️ Configuración Avanzada de K-Means')
+
+        col1, col2 = st.columns(2)
+        with col1:
+            n_init = st.slider(
+                'Número de inicializaciones (n_init):',
+                min_value=1,
+                max_value=100,
+                value=10,
+                help='Más inicializaciones = mejor calidad pero más lento',
+            )
+            max_iter = st.slider(
+                'Máximo de iteraciones (max_iter):',
+                min_value=100,
+                max_value=1000,
+                value=300,
+                step=50,
+                help='Más iteraciones = mejor convergencia pero más lento',
+            )
+
+        with col2:
+            elbow_threshold = st.slider(
+                'Umbral método del codo (elbow_method_threshold):',
+                min_value=0.01,
+                max_value=0.1,
+                value=0.05,
+                step=0.01,
+                help='Umbral para detectar estabilización en método del codo',
+            )
+            optimization_method = st.selectbox(
+                'Método de optimización (optimization_method):',
+                ['both', 'elbow', 'silhouette'],
+                help='Método para encontrar k óptimo',
+            )
+
+        st.markdown('### 🎯 Configuración de Selección de Keyframes')
+
+        col3, col4, col5 = st.columns(3)
+        with col3:
+            keyframe_selection_method = st.selectbox(
+                'Método de selección (keyframe_selection_method):',
+                ['closest_to_centroid', 'furthest_from_centroid'],
+                help='Cómo seleccionar el keyframe de cada cluster',
+            )
+        with col4:
+            temporal_weight = st.slider(
+                'Peso temporal (temporal_weight):',
+                min_value=0.0,
+                max_value=1.0,
+                value=0.0,
+                step=0.1,
+                help='Peso para balancear distancia espacial vs temporal (0= solo espacial, 1= solo temporal)',
+            )
+        with col5:
+            min_frames_per_cluster = st.slider(
+                'Mínimo frames por cluster (min_frames_per_cluster):',
+                min_value=1,
+                max_value=10,
+                value=1,
+                help='Mínimo de frames requeridos para generar un keyframe',
+            )
+    else:
+        # Valores por defecto para cosine_similarity
+        n_init = 10
+        max_iter = 300
+        elbow_threshold = 0.05
+        optimization_method = 'both'
+        keyframe_selection_method = 'closest_to_centroid'
+        temporal_weight = 0.0
+        min_frames_per_cluster = 1
+
     # Verificar cache de keyframes
     cache_key = f'keyframes_{method}'
     cached_keyframes = cache_manager.load_cache(video_id, cache_key)
@@ -674,15 +748,33 @@ elif modo == '4️⃣ Selección de Keyframes':
             st.session_state['keyframe_stats'] = cached_stats
         st.success('✅ Keyframes cargados desde cache')
 
-    keyframe_selector = components['keyframe_selector']
-
-    # Configurar selector según método
+    # Crear nuevo selector con parámetros configurados
     if method == 'cosine_similarity':
-        keyframe_selector.distance_metric = 'cosine'
-        keyframe_selector.normalize_features = True
+        keyframe_selector = KeyFrameSelector(
+            clustering_method='kmeans',
+            distance_metric='cosine',
+            normalize_features=True,
+            n_init=n_init,
+            max_iter=max_iter,
+            elbow_method_threshold=elbow_threshold,
+            optimization_method=optimization_method,
+            keyframe_selection_method=keyframe_selection_method,
+            temporal_weight=temporal_weight,
+            min_frames_per_cluster=min_frames_per_cluster,
+        )
     else:
-        keyframe_selector.distance_metric = 'euclidean'
-        keyframe_selector.normalize_features = False
+        keyframe_selector = KeyFrameSelector(
+            clustering_method='kmeans',
+            distance_metric='euclidean',
+            normalize_features=False,
+            n_init=n_init,
+            max_iter=max_iter,
+            elbow_method_threshold=elbow_threshold,
+            optimization_method=optimization_method,
+            keyframe_selection_method=keyframe_selection_method,
+            temporal_weight=temporal_weight,
+            min_frames_per_cluster=min_frames_per_cluster,
+        )
 
     if not cached_keyframes:
         if st.button('🎯 Seleccionar Keyframes'):
@@ -811,7 +903,10 @@ elif modo == '5️⃣ Clasificación':
                     # Cargar TabularPredictor
                     try:
                         from autogluon.tabular import TabularPredictor
-                        predictor = TabularPredictor.load(model_path)
+                        predictor = TabularPredictor.load(
+                            model_path,
+                            require_version_match=False,
+                        )
                     except ImportError:
                         st.error(
                             '❌ AutoGluon no está instalado. '

@@ -6,6 +6,11 @@ features_resnet50/
 frames/
 videos_youtube/
 keyframes/
+src/app/data/cache/
+src/app/data/embeddings/
+src/app/data/frames/
+src/app/data/videos_youtube/
+src/app/data/pipeline_cache/
 
 # Python-specific ignores
 __pycache__/
