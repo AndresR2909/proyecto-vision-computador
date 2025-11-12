@@ -351,6 +351,20 @@ streamlit run src/app/main_interface.py
 - Python 3.8+
 - CUDA (opcional, para aceleración GPU)
 
+### Crear y Activar Entorno Virtual
+
+**Opción 1: Usando venv (recomendado)**
+```bash
+# Crear entorno virtual
+python -m venv venv
+
+# Activar entorno virtual
+# En macOS/Linux:
+source venv/bin/activate
+# En Windows:
+# venv\Scripts\activate
+```
+
 ### Instalación de Dependencias
 
 ```bash
@@ -483,6 +497,17 @@ proyecto-vision-computador/
 
 ### Opción 1: Interfaz Web (Recomendado)
 
+**Activar el entorno virtual primero:**
+```bash
+# Si usaste venv:
+source venv/bin/activate  # macOS/Linux
+# venv\Scripts\activate  # Windows
+
+# Si usaste conda:
+conda activate proyecto-vision
+```
+
+**Ejecutar la interfaz:**
 ```bash
 streamlit run src/app/main_interface.py
 ```
@@ -661,77 +686,57 @@ Las categorías más comunes en videos de trading:
 
 ---
 
-## 🐛 Solución de Problemas
+## 🎯 Conclusiones
 
-### Problemas Comunes
+### Extracción de Keyframes
 
-1. **Error al descargar videos**:
-   - Verificar conexión a internet
-   - Actualizar `yt-dlp`: `pip install --upgrade yt-dlp`
+**Cosine Similarity** ofrece una cobertura temporal y eficiencia muy superiores, procesando los videos 124 veces más rápido y cubriendo 10 veces más del contenido.
 
-2. **Memoria insuficiente**:
-   - Reducir `batch_size` en `FeatureExtractor`
-   - Procesar videos en lotes más pequeños
+**K-Means** solo es ventajoso cuando se requiere la máxima compresión de datos, aunque sacrifica cobertura y velocidad.
 
-3. **Error de API de OpenAI**:
-   - Verificar `OPENAI_API_KEY` en `.env`
-   - Verificar límites de cuota de API
+**Cosine Similarity** es más simple, preserva mejor la secuencia temporal y detecta cambios relevantes entre frames consecutivos.
 
-4. **Modelo no encontrado**:
-   - Verificar ruta del modelo en `main_interface.py`
-   - Entrenar modelo si no existe
+Para la mayoría de escenarios, **Cosine Similarity** es la opción recomendada; **K-Means** solo debe usarse si la compresión extrema es prioritaria y el tiempo de procesamiento no es crítico.
+
+Implementar un sistema de extracción de información basado en descripciones de keyframes permite a un asistente de análisis financiero para inversores individuales acceder de manera ágil y eficiente a grandes volúmenes de videos de YouTube, sin sacrificar la cobertura informativa esencial.
+
+En promedio, este método reduce el tiempo necesario para revisar el contenido en más de un **55%**, asegurando que los usuarios puedan identificar rápidamente la información relevante para la toma de decisiones financieras, sin la necesidad de ver cada video completo.
 
 ---
 
-## 📈 Mejoras Futuras
+### Clasificación
 
-1. **Optimización de rendimiento**:
-   - Implementación de GPU para procesamiento
-   - Paralelización de extracción de features
-   - Optimización de caché
+El modelo **ResNet-50 + AutoGluon TabularPredictor** alcanza una precisión del **94.14%** en la clasificación de frames en 11 categorías, superando el objetivo inicial del 90%. Esta arquitectura híbrida aprovecha los embeddings de ResNet-50 ya generados para la extracción de keyframes, optimizando el procesamiento mediante la reutilización de características.
 
-2. **Mejora de clasificación**:
-   - Fine-tuning de ResNet-50 en dataset específico
-   - Implementación de modelos de visión-lenguaje (CLIP)
-   - Data augmentation para clases desbalanceadas
+La estrategia de **reutilización de embeddings** elimina la necesidad de re-extraer características para la clasificación, reduciendo significativamente el tiempo de procesamiento y el consumo de recursos computacionales. El modelo funciona completamente **offline** sin necesidad de llamadas a APIs externas, lo que garantiza privacidad, velocidad y reducción de costos operativos.
 
-3. **Nuevas funcionalidades**:
-   - Detección de objetos específicos (gráficos, tablas)
-   - OCR para extracción de texto
-   - Análisis de sentimiento en descripciones
-
-4. **Despliegue**:
-   - API REST para procesamiento remoto
-   - Dockerización del proyecto
-   - Despliegue en la nube
+El clasificador demuestra un rendimiento excepcional en categorías críticas para el análisis financiero: **person** (99.3%), **table** (96.4%), **candlestick** (93.3%), lo que valida su utilidad práctica para el dominio de aplicación. La arquitectura modular permite actualizar el clasificador sin afectar el pipeline de extracción de keyframes, facilitando mejoras iterativas y mantenimiento del sistema.
 
 ---
 
-## 👥 Autores
+### Etiquetado
 
-Proyecto desarrollado como parte del curso de Visión por Computador.
+El proceso de etiquetado semi-automático mediante **consenso entre CLIP y OpenAI GPT-4.1** demuestra ser una estrategia efectiva para crear datasets de alta calidad sin requerir validación manual extensiva. La concordancia del **36.46%** entre ambos modelos, aunque aparentemente baja, garantiza que solo se conserven los frames con mayor confianza, resultando en un dataset de **3,646 frames** con etiquetas de alta calidad.
 
----
+El enfoque de **"LLM as Evaluator"** implementado con GPT-4.1 calificando las etiquetas de CLIP permite una validación cruzada automatizada que reduce significativamente los errores de etiquetado. La iteración en múltiples versiones de prompts optimiza la precisión del etiquetado, demostrando que la ingeniería de prompts es crucial para maximizar el rendimiento de los modelos de visión.
 
-## 📄 Licencia
-
-Este proyecto es de uso académico.
+El balanceo del dataset por canal y categoría asegura representatividad y reduce sesgos, mientras que el filtrado por consenso elimina frames ambiguos que podrían degradar el rendimiento del clasificador. Este proceso semi-automático reduce el tiempo de etiquetado manual en más del **90%** comparado con métodos tradicionales, manteniendo o mejorando la calidad del dataset.
 
 ---
 
-## 🙏 Agradecimientos
+### Preprocesamiento
 
-- OpenAI por la API de GPT-4o Vision
-- AutoGluon por el framework de clasificación automática
-- Los autores de los artículos de referencia
-- Comunidad de código abierto por las herramientas utilizadas
+El pipeline de preprocesamiento logra una **reducción acumulada del 97.53% en almacenamiento** (de 81 GB a 2.0 GB) mediante la conversión de imágenes a embeddings, mientras mantiene la información esencial para el procesamiento posterior. El filtrado **SSIM con umbral 0.95** elimina el **52.16% de frames duplicados**, siendo la etapa más efectiva de reducción antes de la extracción de keyframes.
 
----
+El filtrado de fondos uniformes, aunque elimina solo el **0.16% de frames**, es crucial para eliminar contenido sin información relevante, mejorando la calidad del dataset y reduciendo el ruido en las etapas posteriores. La extracción de embeddings con **ResNet-50 preentrenado** en ImageNet proporciona características robustas y generalizables que son efectivas tanto para clustering como para clasificación.
 
-## 📞 Contacto
-
-Para preguntas o sugerencias sobre el proyecto, por favor crear un issue en el repositorio.
+El procesamiento por lotes (batch_size=32) optimiza el uso de recursos computacionales, especialmente cuando se utiliza GPU, reduciendo el tiempo de extracción de features de manera significativa. La preservación del orden temporal durante el filtrado SSIM es esencial para mantener la coherencia narrativa del video, permitiendo que los keyframes seleccionados representen adecuadamente la secuencia temporal del contenido.
 
 ---
 
-**Última actualización**: 2025
+### Despliegue
+
+La interfaz web con **Streamlit** proporciona una solución accesible y fácil de usar para el procesamiento de videos, permitiendo a usuarios no técnicos aprovechar el sistema completo sin necesidad de conocimientos de programación. El sistema de **caché inteligente** implementado reduce drásticamente los tiempos de procesamiento en ejecuciones repetidas, almacenando resultados intermedios (frames filtrados, embeddings, keyframes, clasificaciones) y evitando reprocesamiento innecesario.
+
+
+La integración con APIs externas (OpenAI GPT-4.1) para generación de descripciones es opcional y se ejecuta solo cuando se requiere, manteniendo el sistema funcional incluso sin conexión a servicios externos. Esta flexibilidad hace que el sistema sea robusto y adaptable a diferentes entornos de despliegue, desde desarrollo local hasta producción en la nube.
